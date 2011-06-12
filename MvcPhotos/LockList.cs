@@ -2,6 +2,11 @@
 
 namespace MvcPhotos
 {
+    /// <summary>
+    /// ロックが取得できなかったらすぐに終了するよ
+    /// クラウドからファイルを取得する際に使用。
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class LockList<T>
     {
         private List<T> _lock = new List<T>();
