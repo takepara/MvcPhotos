@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C9BCFA4F-A67D-4FB2-A8DD-BBC1693476EC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MvcPhotos.Tests</RootNamespace>
+    <AssemblyName>MvcPhotos.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+  </ItemGroup>
+  <ItemGroup>
+    <CodeAnalysisDependentAssemblyPaths Condition=" '$(VS100COMNTOOLS)' != '' " Include="$(VS100COMNTOOLS)..\IDE\PrivateAssemblies">
+      <Visible>False</Visible>
+    </CodeAnalysisDependentAssemblyPaths>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controller\HomeControllerTest.cs" />
+    <Compile Include="ImageResizerTest.cs" />
+    <Compile Include="ModelsTest.cs" />
+    <Compile Include="Services\MailServiceTest.cs" />
+    <Compile Include="Services\PhotosServiceTest.cs" />
+    <Compile Include="Storage\AwsS3StorageProviderTest.cs" />
+    <Compile Include="Storage\LocalStorageProviderTest.cs" />
+    <Compile Include="Storage\StorageProviderExtensionsTest.cs" />
+    <Compile Include="Mail\FakePop3Test.cs" />
+    <Compile Include="Mail\FakeTransport.cs" />
+    <Compile Include="Mail\MimeTest.cs" />
+    <Compile Include="Mail\RealPop3Test.cs" />
+    <Compile Include="ObjectResolverTest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="appSettings.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TestImages\little.png" />
+    <Content Include="TestImages\1-0-__.JPG" />
+    <Content Include="TestImages\10-0-__.JPG" />
+    <Content Include="TestImages\2-0-metalking.jpg" />
+    <Content Include="TestImages\3-0-image.jpg" />
+    <Content Include="TestImages\4-0-image.jpg" />
+    <Content Include="TestImages\4-1-NEC_0001.jpg" />
+    <Content Include="TestImages\5-0-2011-05-19 15.12.14.jpg" />
+    <Content Include="TestImages\6-0-2011-05-19 15.12.58.jpg" />
+    <Content Include="TestImages\7-0-2011-05-19 15.12.14.jpg" />
+    <Content Include="TestImages\8-0-2011-05-19 15.12.58.jpg" />
+    <Content Include="TestImages\9-0-__.JPG" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MvcPhotos.Services\MvcPhotos.Services.csproj">
+      <Project>{5E9AF88F-2B6B-491A-AD91-6C6CC2C9A652}</Project>
+      <Name>MvcPhotos.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MvcPhotos.Web\MvcPhotos.Web.csproj">
+      <Project>{4CB8F2A0-210F-4E3C-BF96-BA79156BDEA7}</Project>
+      <Name>MvcPhotos.Web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MvcPhotos\MvcPhotos.csproj">
+      <Project>{AC609506-A71D-49B2-A44B-F8BC3F6EAC7B}</Project>
+      <Name>MvcPhotos</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="smtp.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>rd /S /Q "$(ProjectDir)bin\Debug\TestResults"
+rd /S /Q "$(ProjectDir)bin\Release\TestResults"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

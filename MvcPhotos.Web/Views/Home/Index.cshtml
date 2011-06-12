@@ -1,0 +1,71 @@
+﻿<div id="page" style="display:none;">
+
+<header>
+    <h1 class="insetType shadow">mvcPhotos</h1>
+    <a id="upload" class="iframe" href="@Url.UaRouteUrl("Default", new { action = "create", controller = "Photos" })" style="display:none;">Upload</a>
+    <a id="sendmail" href="mailto:@MvcPhotos.Web.Models.Photo.EmailAddress" style="display:none;">Send mail</a>
+</header>
+
+<aside id="menu">
+    <ul class="tags clearfix">
+        <li>
+            <a href="@Url.RouteUrl("Default", new { action = "Index", controller = "Photos" })" id="recents">最新</a>
+        </li>
+    </ul>
+    <div id="tagsContainer" data-href="@Url.RouteUrl("Default", new { action = "Index", controller = "Tags" })">
+        <ul id="tags" class="tags clearfix" data-bind="template:{name:'tag_tmpl',foreach:tags}"></ul>
+    </div>
+</aside>
+
+<section id="contents">
+    <div id="preview">
+        <a class="image-container">
+            <img src="@Url.Content("~/Content/pixel.gif")" alt="preview"/>
+        </a>
+    </div>
+    <ul id="photos" class="clearfix" data-bind="template:{name:'photo_tmpl',foreach:photos, afterRender: viewPhotos}">
+    </ul>
+</section>
+
+</div>
+<div id="debug" style="position: absolute; bottom: 0; width: 100%; height: 3em; background-color: #222;"></div>
+@section css 
+{
+    <link href="@Url.Content("~/Content/colorbox.css")" rel="stylesheet" type="text/css" />
+}
+
+@section js {
+    <script src="@Url.Content("~/Scripts/jquery.tmpl.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.slick.menu.1.0.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/knockout-1.2.1.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/site.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.colorbox-min.js")" type="text/javascript"></script>
+
+    <script type="text/x-jquery-tmpl" id="tag_tmpl">
+    <li>
+	    <a href="@Url.RouteUrl("Default", new { action = "Tags", controller = "Photos" })/${encodeURI(Text)}">${Text}</a><span>${Count}</span>
+    </li>
+    </script>
+
+    <script type="text/x-jquery-tmpl" id="photo_tmpl">
+    <li>
+	    <a href="@Url.RouteUrl("Default", new { action = "Image", controller = "Photos" })/${Id}?size=350&type=fit" class="image-container">
+        <img id="thumb_${Id}" src="@Url.RouteUrl("Default", new { action = "Image", controller = "Photos" })/${Id}?size=100&type=clip" />
+        </a>
+    </li>
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            // とりあえずデモ用にiPadはPC判定する。
+            Modernizr.load({
+                test: !Modernizr.touch || Modernizr.mq("only screen and (min-device-width: 768px) and (max-device-width: 1024px)"),
+                yep: ['@Url.Content("~/Scripts/mvcphotos.js")', '@Url.Content("~/Content/mvcphotos.css")'],
+                nope: ['@Url.Content("~/Scripts/mvcphotos.sp.js")', '@Url.Content("~/Content/mvcphotos.sp.css")'],
+                complete: function () {
+                    $("#page").fadeIn();
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,27 @@
+﻿@model MvcPhotos.Web.Models.Paging<MvcPhotos.Web.Models.Photo>
+@{
+    Layout = "~/Views/Shared/_Layout.mobile.cshtml";
+    var tag = ViewContext.HttpContext.Request["id"] + "";
+    
+}
+@if (!string.IsNullOrWhiteSpace(tag))
+{
+    <h2>[@tag]</h2>
+}
+<a href="@Url.UaRouteUrl("Default", new { action="Index", controller="Home" })">トップへ</a>
+
+<ul style="list-style: none;">
+@foreach (var photo in Model.Items.Take(50))
+{
+    <li>
+	    <a href="@Url.RouteUrl("Default", new { action = "Image", controller = "Photos" })/@photo.Id?size=350&type=fit" class="image-container">
+        <img id="thumb_@photo.Id" src="@Url.RouteUrl("Default", new { action = "Image", controller = "Photos" })/@photo.Id?size=100&type=clip" />
+        </a>
+    </li>
+}
+</ul>
+
+@if (Model.Items.Count() > 50)
+{
+    @:and more...
+}

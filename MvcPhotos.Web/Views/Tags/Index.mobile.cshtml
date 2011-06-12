@@ -1,0 +1,18 @@
+﻿@model MvcPhotos.Web.Models.Paging<MvcPhotos.Web.Models.Tag>
+@{
+    if (ViewContext.IsChildAction)
+    {
+        Layout = null;
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.mobile.cshtml";
+    }
+}
+<ul>
+    @foreach (var tag in Model.Items)
+    {
+        <li><a href="@Url.UaRouteUrl("Default", new { action = "Tags", controller = "Photos" })?id=@Server.UrlEncode(tag.Text)">@tag.Text</a>(@tag.Count)
+        </li>
+    }
+</ul>

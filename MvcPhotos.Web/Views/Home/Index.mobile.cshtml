@@ -1,0 +1,11 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.mobile.cshtml";
+}
+<a id="sendmail" href="mailto:@MvcPhotos.Web.Models.Photo.EmailAddress">Send mail</a>
+<ul>
+<li>
+<a href="@Url.UaRouteUrl("Default", new { action="Index", controller="Photos" })">最新</a>
+</li>
+</ul>
+
+@Html.Action("Index","Tags")
