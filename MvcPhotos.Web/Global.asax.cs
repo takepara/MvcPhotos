@@ -130,7 +130,7 @@ namespace MvcPhotos.Web
 
         public static void MailWorker()
         {
-            var enable = bool.Parse(ConfigurationManager.AppSettings["Worker.Mail"] ?? "false");
+            var enable = bool.Parse(ConfigurationManager.AppSettings["Enable.MailWorker"] ?? "false");
             var service = new MailService();
             var uploading = StorageSettings.BasePath("Storage.Uploading");
 
@@ -144,7 +144,7 @@ namespace MvcPhotos.Web
 
         public static void StorageWorker()
         {
-            var enable = bool.Parse(ConfigurationManager.AppSettings["Worker.Storage"] ?? "false");
+            var enable = bool.Parse(ConfigurationManager.AppSettings["Enable.StorageWorker"] ?? "false");
             using (var service = new PhotosService())
             {
                 var uploading = StorageSettings.BasePath("Storage.Uploading");

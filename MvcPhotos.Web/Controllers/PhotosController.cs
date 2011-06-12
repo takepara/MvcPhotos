@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -44,6 +45,10 @@ namespace MvcPhotos.Web.Controllers
 
         public ActionResult Create()
         {
+            var enable = bool.Parse(ConfigurationManager.AppSettings["Enable.Upload"] ?? "false");
+            if (!enable)
+                return View("CreateDisable");
+
             ViewBag.Message = TempData[CreateMessage];
             return View();
         }
@@ -51,6 +56,10 @@ namespace MvcPhotos.Web.Controllers
         [HttpPost]
         public ActionResult Create(Photo photo)
         {
+            var enable = bool.Parse(ConfigurationManager.AppSettings["Enable.Upload"] ?? "false");
+            if (!enable)
+                return new HttpStatusCodeResult(406);
+
             using (var service = new PhotosService())
             {
                 var model = photo.ToModel();
