@@ -12,6 +12,7 @@ using System.Web.Routing;
 using MvcPhotos.Services;
 using MvcPhotos.Services.Mvc;
 using MvcPhotos.Storage.Providers;
+using MvcPhotos.Web.Controllers;
 
 namespace MvcPhotos.Web
 {
@@ -70,7 +71,6 @@ namespace MvcPhotos.Web
             {
                 ObjectResolver.Entry<IStorageProvider>(() => new AwsS3StorageProvider(localPath));
             }
-            //DependencyResolver.SetResolver(new SimpleResolver());
 
             // create folder
             var dirs = new[]{
@@ -96,6 +96,9 @@ namespace MvcPhotos.Web
 
             ViewEngines.Engines.Clear();
             ViewEngines.Engines.Add(new UaRazorViewEngine());
+
+            // DependencyResolver !!
+            // DependencyResolver.SetResolver(new SimpleResolver());
         }
 
         private void OutputStackTrace()
@@ -164,27 +167,37 @@ namespace MvcPhotos.Web
     {
         public SimpleResolver()
         {
-            ObjectResolver.Entry<IControllerFactory>(() => new DefaultControllerFactory());
-            ObjectResolver.Entry<IControllerActivator>(() => null);
-            ObjectResolver.Entry<IFilterProvider>(() => GlobalFilters.Filters);
-            ObjectResolver.Entry<IModelBinderProvider>(() => null);
-            ObjectResolver.Entry<ValueProviderFactory>(() => null);
-            ObjectResolver.Entry<ModelMetadataProvider>(() => new DataAnnotationsModelMetadataProvider());
-            ObjectResolver.Entry<ModelValidatorProvider>(() => new DataAnnotationsModelValidatorProvider());
-            ObjectResolver.Entry<IViewEngine>(() => new RazorViewEngine());
-            ObjectResolver.Entry<IViewPageActivator>(() => null);
+            ObjectResolver.Entry<HomeController>(() => new HomeController(){InjectionTitle = "Injection mvcPhotos"});
+            //ObjectResolver.Entry<IControllerFactory>(() => new DefaultControllerFactory());
+            //ObjectResolver.Entry<IControllerActivator>(() => null);
+            //ObjectResolver.Entry<IFilterProvider>(() => GlobalFilters.Filters);
+            //ObjectResolver.Entry<IModelBinderProvider>(() => null);
+            //ObjectResolver.Entry<ValueProviderFactory>(() => null);
+            //ObjectResolver.Entry<ModelMetadataProvider>(() => new DataAnnotationsModelMetadataProvider());
+            //ObjectResolver.Entry<ModelValidatorProvider>(() => new DataAnnotationsModelValidatorProvider());
+            //ObjectResolver.Entry<IViewEngine>(() => new UaRazorViewEngine());
+            //ObjectResolver.Entry<IViewPageActivator>(() => null);
         }
 
         public object GetService(Type serviceType)
         {
-            return ObjectResolver.Contains(serviceType)
-                        ? ObjectResolver.Resolve<object>(serviceType)
-                        : Activator.CreateInstance(serviceType);
+            try
+            {
+                return ObjectResolver.Contains(serviceType)
+                            ? ObjectResolver.Resolve<object>(serviceType)
+                            : Activator.CreateInstance(serviceType);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public IEnumerable<object> GetServices(Type serviceType)
         {
-            return ObjectResolver.Resolves<object>(serviceType);
+            return ObjectResolver.Contains(serviceType)
+                       ? ObjectResolver.Resolves<object>(serviceType)
+                       : Enumerable.Empty<object>();
         }
     }
     #endregion

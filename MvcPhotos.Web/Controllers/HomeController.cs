@@ -5,9 +5,10 @@ namespace MvcPhotos.Web.Controllers
 {
     public class HomeController : Controller
     {
+        public string InjectionTitle { get; set; }
         public ActionResult Index()
         {
-            ViewBag.Title = "mvcPhotos - ASP.NET MVC photoshot collection";
+            ViewBag.Title = InjectionTitle ?? "mvcPhotos - ASP.NET MVC photoshot collection";
             
             return View();
         }
