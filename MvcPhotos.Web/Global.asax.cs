@@ -43,6 +43,10 @@ namespace MvcPhotos.Web
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            routes.MapRoute(
+                "PhotoImage",
+                "Photos/Image/{id}/{size}/{type}",
+                new {controller = "Photos", action = "Image"});
             UaMapRoute(routes,
                 "Tags", // Route name
                 "Tags/{id}", // URL with parameters

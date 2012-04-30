@@ -49,8 +49,8 @@
 
     <script type="text/x-jquery-tmpl" id="photo_tmpl">
     <li>
-	    <a href="@Url.RouteUrl("Default", new { action = "Image", controller = "Photos" })/${Id}?size=350&type=fit" class="image-container">
-        <img id="thumb_${Id}" src="@Url.RouteUrl("Default", new { action = "Image", controller = "Photos" })/${Id}?size=100&type=clip" />
+	    <a href="@Url.RouteUrl("Default", new { action = "Image", controller = "Photos" })/${Id}/350/fit" class="image-container">
+        <img id="thumb_${Id}" src="@Url.RouteUrl("Default", new { action = "Image", controller = "Photos" })/${Id}/100/clip" />
         </a>
     </li>
     </script>
